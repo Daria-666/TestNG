@@ -44,12 +44,24 @@ public class LoginTest {
         }
     }
     @Test
-    public void logeVerification () {
+    public void logoVerification () {
         WebElement syntaxLogo = chrome.findElement(By.xpath("//img [ @src = '/humanresources/symfony/web/webres_5acde3dbd3adc6.90334155/themes/default/images/login/syntax.png']"));
         if (syntaxLogo.isDisplayed()) {
             System.out.println("Logo is displayed, Test pass");
         } else {
             System.out.println("No logo, Test fail");
+        }
+    }
+    @Test
+    public void invalidLogin () {
+        chrome.findElement(By.id("txtUsername")).sendKeys("Admin");
+        chrome.findElement(By.id("txtPassword")).sendKeys("Hum123");
+        chrome.findElement(By.id("btnLogin")).click();
+        WebElement errorMessage = chrome.findElement(By.id("spanMessage"));
+        if (errorMessage.isDisplayed()) {
+            System.out.println("Error message is displayed, Test pass");
+        } else {
+            System.out.println("Message is not displayed, Test fail");
         }
     }
     @AfterTest
