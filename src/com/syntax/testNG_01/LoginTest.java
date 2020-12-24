@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
@@ -26,43 +27,29 @@ public class LoginTest {
         chrome.findElement(By.id("txtUsername")).sendKeys("Admin");
         chrome.findElement(By.id("txtPassword")).sendKeys("Hum@nhrm123");
         chrome.findElement(By.id("btnLogin")).click();
-        WebElement welcomeMessage = chrome.findElement(By.xpath("//a [text() = 'Welcome Admin']"));
-        if (welcomeMessage.isDisplayed()) {
-            System.out.println("Login is successful");
-        } else {
-            System.out.println("Not logged in, Test failed");
-        }
+        WebElement welcomeMessage = chrome.findElement(By.xpath("//a [contains (text(), 'Welcome')]"));
+        Assert.assertTrue(welcomeMessage.isDisplayed(), "Welcome message is not displayed");
     }
     @Test
     public void titleValidation () {
         String actualTitle = chrome.getTitle();
         String expectedTitle = "Human Management System";
-        if (actualTitle.equals(expectedTitle)) {
-            System.out.println("Title verified, Test pass");
-        } else {
-            System.out.println("Wrong title, Test fail");
-        }
+        Assert.assertEquals(actualTitle, expectedTitle, "Wrong Title is displayed");
     }
     @Test
     public void logoVerification () {
-        WebElement syntaxLogo = chrome.findElement(By.xpath("//img [ @src = '/humanresources/symfony/web/webres_5acde3dbd3adc6.90334155/themes/default/images/login/syntax.png']"));
-        if (syntaxLogo.isDisplayed()) {
-            System.out.println("Logo is displayed, Test pass");
-        } else {
-            System.out.println("No logo, Test fail");
-        }
+        WebElement syntaxLogo = chrome.findElement(By.id("divLogo"));
+        Assert.assertTrue(syntaxLogo.isDisplayed(), "Logo is not displayed");
     }
     @Test
     public void invalidLogin () {
         chrome.findElement(By.id("txtUsername")).sendKeys("Admin");
-        chrome.findElement(By.id("txtPassword")).sendKeys("Hum123");
+        chrome.findElement(By.id("txtPasswordd")).sendKeys("Hum123");
         chrome.findElement(By.id("btnLogin")).click();
         WebElement errorMessage = chrome.findElement(By.id("spanMessage"));
-        if (errorMessage.isDisplayed()) {
-            System.out.println("Error message is displayed, Test pass");
-        } else {
-            System.out.println("Message is not displayed, Test fail");
-        }
+        String actualMessage = errorMessage.getText();
+        String expectedMessage = "Invalid credentials";
+        Assert.assertEquals(actualMessage, expectedMessage, "Incorrect error message");
     }
     @AfterTest
     public void quitBrowser () {

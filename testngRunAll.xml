@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true"
+          name="C:/Users/Bultozavrik/eclipse-workspace/TestNG/src/com/syntax/textNG_01/Intro.java">
+        <classes>
+            <class name="com.syntax.textNG_02.SoftAssertion"/>
+            <class name="com.syntax.testNG_01.Intro2"/>
+            <class name="com.syntax.testNG_01.LoginTest"/>
+            <class name="com.syntax.testNG_01.PreAndPostConditionAnnotation"/>
+        </classes>
+    </test>
+</suite>
